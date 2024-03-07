@@ -98,13 +98,15 @@ class Notification(QLabel):
             # size.setHeight(image_height)
             # size.setWidth(image_height * aspect)
             # manual scaling since methods w/ aspect ratio specified didn't work
-            size.scale(image_height, image_height, Qt.AspectRatioMode.KeepAspectRatio)
+            size.scale(image_height, image_height, Qt.AspectRatioMode.KeepAspectRatioByExpanding)
             movie.setScaledSize(size)
             movie_label = QLabel()
             movie_label.setMovie(movie)
             movie.start()
             self.layout().addWidget(movie_label)
-        self.layout().addWidget(QLabel(text))
+
+        message = QLabel(text)
+        self.layout().addWidget(message)
         self._progress_manager = progress_manager
         self._duration = duration
         self._align_horizontal = align_horizontal
@@ -118,6 +120,7 @@ class Notification(QLabel):
         palette.setColor(QPalette.ColorRole.Window, QColor(bg_color))
         palette.setColor(QPalette.ColorRole.WindowText, QColor(fg_color))
         self.setPalette(palette)
+        message.setPalette(palette)
 
     def show(self) -> None:
         # TODO: drop dependency on mw
