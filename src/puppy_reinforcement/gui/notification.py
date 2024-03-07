@@ -94,6 +94,7 @@ class Notification(QLabel):
             )
         elif movie:
             movie = QMovie(movie)
+            self._movie_label = QLabel()
             movie.updated.connect(self.movieFirstUpdateEvent)
             movie.start()
             size = movie.scaledSize()
@@ -106,7 +107,6 @@ class Notification(QLabel):
             # size.scale(1024, 1024, Qt.AspectRatioMode.IgnoreAspectRatio)
             # print(size)
             # movie.setScaledSize(size)
-            self._movie_label = QLabel()
             # movie_label.setMaximumHeight(image_height)
             # movie_label.setMaximumWidth(image_height * aspect)
             self._movie_label.setMovie(movie)
@@ -135,7 +135,9 @@ class Notification(QLabel):
         aspect = rect.width() / rect.height()
         self._movie_label.movie().setScaledSize(QSize(self._image_height * aspect, self._image_height))
         self._movie_label.setMaximumHeight(self._image_height + 20)
-        self.adjustSize()
+        self.setMaximumHeight(self._image_height + 20)
+        # self._movie_label.adjustSize()
+        # self.adjustSize()
         # resize only once
         self._movie_label.movie().updated.disconnect(self.movieFirstUpdateEvent)
 
