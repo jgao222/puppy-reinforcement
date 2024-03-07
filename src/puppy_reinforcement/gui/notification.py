@@ -83,7 +83,8 @@ class Notification(QLabel):
         super().__init__("", parent=parent, **kwargs)
         if picture or movie:
             if picture:
-                pic = QPicture(picture)
+                pic = QPicture()
+                pic.load(picture)
                 self.setPicture(pic)
             elif movie:
                 movie = QMovie(movie)
