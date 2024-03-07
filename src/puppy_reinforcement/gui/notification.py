@@ -95,6 +95,7 @@ class Notification(QLabel):
         elif movie:
             movie = QMovie(movie)
             self._movie_label = QLabel()
+            self._movie_label.setMovie(movie)
             movie.updated.connect(self.movieFirstUpdateEvent)
             movie.start()
             size = movie.scaledSize()
@@ -109,7 +110,6 @@ class Notification(QLabel):
             # movie.setScaledSize(size)
             # movie_label.setMaximumHeight(image_height)
             # movie_label.setMaximumWidth(image_height * aspect)
-            self._movie_label.setMovie(movie)
             self.layout().addWidget(self._movie_label)
 
         message = QLabel(text)
