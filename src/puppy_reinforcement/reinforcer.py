@@ -98,6 +98,7 @@ class PuppyReinforcer:
             text,
             image_path,
             movie_path,
+            local_config["image_height"],
             self._mw.progress,
             duration=local_config["duration"],
             parent=self._mw.app.activeWindow() or self._mw,

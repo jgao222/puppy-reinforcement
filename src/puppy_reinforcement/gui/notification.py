@@ -69,6 +69,7 @@ class Notification(QLabel):
         text: str,
         picture: str,
         movie: str,
+        image_height: str,
         progress_manager: ProgressManager,
         parent: QWidget,
         duration: int = 3000,
@@ -86,6 +87,15 @@ class Notification(QLabel):
                 pic = QPicture()
                 pic.load(picture)
                 self.setPicture(pic)
+                self.setText(f"""\
+<table cellpadding=10>
+<tr>
+<td><img height={image_height} src="{picture}"></td>
+<td valign="middle">
+    <center>{text}</center>
+</td>
+</tr>
+</table>""")
             elif movie:
                 movie = QMovie(movie)
                 self.setMovie(movie)
