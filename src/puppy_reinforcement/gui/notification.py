@@ -129,8 +129,8 @@ class Notification(QLabel):
         self.setPalette(palette)
         message.setPalette(palette)
 
-    def movieFirstUpdateEvent(self):
-        rect = self._movie_label.movie().scaledSize()
+    def movieFirstUpdateEvent(self, rect: QRect):
+        # rect = self._movie_label.movie().scaledSize()
         print("resize!", rect)
         aspect = rect.width() / rect.height()
         self._movie_label.movie().setScaledSize(QSize(self._image_height * aspect, self._image_height))
