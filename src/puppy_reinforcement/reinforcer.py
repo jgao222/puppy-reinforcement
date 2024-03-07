@@ -92,7 +92,7 @@ class PuppyReinforcer:
 
         text = f"<b>{count} {'cards' if count > 1 else 'card'} done so far!</b><br>{encouragement}"
         movie_path = image_path if image_path.endswith(".gif") else None
-        image_path = image_path if movie is None else None
+        image_path = image_path if movie_path is None else None
 
         notification = Notification(
             text,
