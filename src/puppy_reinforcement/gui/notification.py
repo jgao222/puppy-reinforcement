@@ -53,6 +53,7 @@ from aqt.qt import (
     QPicture,
     QMovie,
     QHBoxLayout,
+    KeepAspectRatio,
 )
 
 from ..libaddon.platform import is_anki_version_in_range
@@ -82,21 +83,25 @@ class Notification(QLabel):
         **kwargs,
     ):
         super().__init__("", parent=parent, **kwargs)
-        self.setMaximumHeight(image_height)
-        if picture or movie:
-            if picture:
-                # pic = QPicture()
-                # pic.load(picture)
-                # self.setPicture(pic)
-                self.setText(f"""\<img height={image_height} src="{picture}">""")
-            elif movie:
-                movie = QMovie(movie)
-                self.setMovie(movie)
-                movie.start()
-            self.setLayout(QHBoxLayout())
-            self.layout().addWidget(QLabel(text))
-        else:
-            self.setText(text)
+        # self.setMaximumHeight(image_height)
+        self.setLayout(QHBoxLayout)
+        if picture:
+            # pic = QPicture()
+            # pic.load(picture)
+            # self.setPicture(pic)
+            self.layout().addWidget(
+                QLabel(f"""\<img height={image_height} src="{picture}">""")
+            )
+        elif movie:
+            movie = QMovie(movie)
+            size = movie.scaledSize()
+            size.scale(1000000, image_height, KeepAspectRatio)
+            movie.setScaledSize(size)
+            movie_label = QLabel()
+            movie_label.setMovie(movie)
+            movie.start()
+            self.layout().addWidgest(movie_label)
+        self.layout().addWidget(QLabel(text))
         self._progress_manager = progress_manager
         self._duration = duration
         self._align_horizontal = align_horizontal
