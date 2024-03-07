@@ -98,7 +98,7 @@ class Notification(QLabel):
             movie_label = QLabel()
             movie_label.setMovie(movie)
             movie.start()
-            self.layout().addWidgest(movie_label)
+            self.layout().addWidget(movie_label)
         self.layout().addWidget(QLabel(text))
         self._progress_manager = progress_manager
         self._duration = duration
