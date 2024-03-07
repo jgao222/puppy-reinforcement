@@ -90,21 +90,15 @@ class PuppyReinforcer:
         local_config = self._config["local"]
         count = self._state["cnt"]
 
-#         html = f"""\
-# <table cellpadding=10>
-# <tr>
-# <td><img height={local_config["image_height"]} src="{image_path}"></td>
-# <td valign="middle">
-#     <center><b>{count} {'cards' if count > 1 else 'card'} done so far!</b><br>
-#     {encouragement}</center>
-# </td>
-# </tr>
-# </table>"""
-        html = "Hello World!"
+        text = f"<b>{count} {'cards' if count > 1 else 'card'} done so far!</b><br>{encouragement}"
+        movie = image_path if image_path.endswith(".gif") else None
+        picture = image_path if movie is None else None
 
         notification = Notification(
-            html,
+            text,
             self._mw.progress,
+            movie=movie,
+            picture=picture,
             duration=local_config["duration"],
             parent=self._mw.app.activeWindow() or self._mw,
             align_horizontal=local_config["tooltip_align_horizontal"],

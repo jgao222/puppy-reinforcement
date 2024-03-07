@@ -50,6 +50,9 @@ from aqt.qt import (
     Qt,
     QTimer,
     QWidget,
+    QPicture,
+    QMovie,
+    QHBoxLayout,
 )
 
 from ..libaddon.platform import is_anki_version_in_range
@@ -64,6 +67,8 @@ class Notification(QLabel):
     def __init__(
         self,
         text: str,
+        picture: str,
+        movie: str,
         progress_manager: ProgressManager,
         parent: QWidget,
         duration: int = 3000,
@@ -75,7 +80,19 @@ class Notification(QLabel):
         bg_color: str = "#FFFFFF",
         **kwargs,
     ):
-        super().__init__(text, parent=parent, **kwargs)
+        super().__init__("", parent=parent, **kwargs)
+        if picture or movie:
+            if picture:
+                pic = QPicture(picture)
+                self.setPicture(pic)
+            elif movie:
+                movie = QMovie(movie)
+                self.setMovie(movie)
+                movie.start()
+            self.setLayout(QHBoxLayout())
+            self.layout().addWidget(QLabel(text))
+        else:
+            self.setText(text)
         self._progress_manager = progress_manager
         self._duration = duration
         self._align_horizontal = align_horizontal
