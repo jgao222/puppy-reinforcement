@@ -92,17 +92,18 @@ class Notification(QLabel):
             )
         elif movie:
             movie = QMovie(movie)
-            movie.start()
-            size = movie.scaledSize()
-            aspect = size.width() / size.height()
+            # size = movie.scaledSize()
+            # aspect = size.width() / size.height()
             image_height = int(image_height)
             # size.setHeight(image_height)
             # size.setWidth(image_height * aspect)
             # manual scaling since methods w/ aspect ratio specified didn't work
-            size.scale(image_height, image_height, Qt.AspectRatioMode.KeepAspectRatio)
-            movie.setScaledSize(size)
+            # size.scale(image_height, image_height, Qt.AspectRatioMode.KeepAspectRatio)
+            # movie.setScaledSize(size)
             movie_label = QLabel()
+            movie_label.setMaximumHeight(image_height)
             movie_label.setMovie(movie)
+            movie.start()
             self.layout().addWidget(movie_label)
 
         message = QLabel(text)
