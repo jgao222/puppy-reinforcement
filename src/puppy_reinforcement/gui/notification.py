@@ -37,6 +37,7 @@ Customizable notification pop-up
 
 
 from typing import Optional, cast
+from aqt import QSize
 
 from aqt.progress import ProgressManager
 from aqt.qt import (
@@ -82,6 +83,7 @@ class Notification(QLabel):
     ):
         super().__init__("", parent=parent, **kwargs)
         # self.setMaximumHeight(image_height)
+        self._image_height = int(image_height)
         self.setLayout(QHBoxLayout())
         if picture:
             # pic = QPicture()
@@ -93,22 +95,22 @@ class Notification(QLabel):
         elif movie:
             movie = QMovie(movie)
             movie.start()
+            movie.resized.connect(self.movieResizeEvent)
             size = movie.scaledSize()
             # aspect = size.width() / size.height()
-            image_height = int(image_height)
             # size.setHeight(image_height)
             # size.setWidth(image_height * aspect)
             # manual scaling since methods w/ aspect ratio specified didn't work
             # size.scale(image_height, image_height, Qt.AspectRatioMode.KeepAspectRatio)
             print(size)
-            size.scale(1024, 1024, Qt.AspectRatioMode.IgnoreAspectRatio)
-            print(size)
-            movie.setScaledSize(size)
-            movie_label = QLabel()
+            # size.scale(1024, 1024, Qt.AspectRatioMode.IgnoreAspectRatio)
+            # print(size)
+            # movie.setScaledSize(size)
+            self._movie_label = QLabel()
             # movie_label.setMaximumHeight(image_height)
             # movie_label.setMaximumWidth(image_height * aspect)
-            movie_label.setMovie(movie)
-            self.layout().addWidget(movie_label)
+            self._movie_label.setMovie(movie)
+            self.layout().addWidget(self._movie_label)
 
         message = QLabel(text)
         self.layout().addWidget(message)
@@ -126,6 +128,11 @@ class Notification(QLabel):
         palette.setColor(QPalette.ColorRole.WindowText, QColor(fg_color))
         self.setPalette(palette)
         message.setPalette(palette)
+
+    def movieResizeEvent(self, size: QSize):
+        print("resize!", size)
+        aspect = size.width() / size.height()
+        self._movie_label.movie().setScaledSize(QSize(self._image_height * aspect, self._image_height))
 
     def show(self) -> None:
         # TODO: drop dependency on mw
