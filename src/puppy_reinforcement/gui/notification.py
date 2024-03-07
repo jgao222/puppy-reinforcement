@@ -85,18 +85,10 @@ class Notification(QLabel):
         self.setMaximumHeight(image_height)
         if picture or movie:
             if picture:
-                pic = QPicture()
-                pic.load(picture)
-                self.setPicture(pic)
-                self.setText(f"""\
-<table cellpadding=10>
-<tr>
-<td><img height={image_height} src="{picture}"></td>
-<td valign="middle">
-    <center>{text}</center>
-</td>
-</tr>
-</table>""")
+                # pic = QPicture()
+                # pic.load(picture)
+                # self.setPicture(pic)
+                self.setText(f"""\<img height={image_height} src="{picture}">""")
             elif movie:
                 movie = QMovie(movie)
                 self.setMovie(movie)
