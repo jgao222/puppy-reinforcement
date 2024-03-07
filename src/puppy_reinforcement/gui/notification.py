@@ -100,7 +100,7 @@ class Notification(QLabel):
             size.setWidth(image_height * aspect)
             # manual scaling since methods w/ aspect ratio specified didn't work
             # size.scale(image_height, image_height, Qt.AspectRatioMode.KeepAspectRatio)
-            # movie.setScaledSize(size)
+            movie.setScaledSize(size)
             movie_label = QLabel()
             movie_label.setMaximumHeight(image_height)
             movie_label.setMaximumWidth(image_height * aspect)
