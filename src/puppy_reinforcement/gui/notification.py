@@ -82,7 +82,7 @@ class Notification(QLabel):
     ):
         super().__init__("", parent=parent, **kwargs)
         # self.setMaximumHeight(image_height)
-        self.setLayout(QHBoxLayout)
+        self.setLayout(QHBoxLayout())
         if picture:
             # pic = QPicture()
             # pic.load(picture)
