@@ -37,7 +37,7 @@ Customizable notification pop-up
 
 
 from typing import Optional, cast
-from aqt import QSize
+from aqt import QRect, QSize
 
 from aqt.progress import ProgressManager
 from aqt.qt import (
@@ -129,10 +129,12 @@ class Notification(QLabel):
         self.setPalette(palette)
         message.setPalette(palette)
 
-    def movieResizeEvent(self, size: QSize):
-        print("resize!", size)
-        aspect = size.width() / size.height()
+    def movieFirstUpdateEvent(self, rect: QRect):
+        print("resize!", rect)
+        aspect = rect.width() / rect.height()
         self._movie_label.movie().setScaledSize(QSize(self._image_height * aspect, self._image_height))
+        # resize only once
+        self._movie_label.move().updated.disconnect(self.movieFirstUpdateEvent)
 
     def show(self) -> None:
         # TODO: drop dependency on mw
