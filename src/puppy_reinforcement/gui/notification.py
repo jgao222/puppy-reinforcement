@@ -95,7 +95,7 @@ class Notification(QLabel):
         elif movie:
             movie = QMovie(movie)
             movie.start()
-            movie.updated.connect(self.movieFirstUpdateEvent)
+            movie.started.connect(self.movieFirstUpdateEvent)
             size = movie.scaledSize()
             # aspect = size.width() / size.height()
             # size.setHeight(image_height)
@@ -136,7 +136,7 @@ class Notification(QLabel):
         self._movie_label.setMaximumHeight(self._image_height + 20)
         self._movie_label.adjustSize()
         # resize only once
-        self._movie_label.movie().updated.disconnect(self.movieFirstUpdateEvent)
+        # self._movie_label.movie().updated.disconnect(self.movieFirstUpdateEvent)
 
     def show(self) -> None:
         # TODO: drop dependency on mw
