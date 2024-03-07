@@ -90,16 +90,17 @@ class PuppyReinforcer:
         local_config = self._config["local"]
         count = self._state["cnt"]
 
-        html = f"""\
-<table cellpadding=10>
-<tr>
-<td><img height={local_config["image_height"]} src="{image_path}"></td>
-<td valign="middle">
-    <center><b>{count} {'cards' if count > 1 else 'card'} done so far!</b><br>
-    {encouragement}</center>
-</td>
-</tr>
-</table>"""
+#         html = f"""\
+# <table cellpadding=10>
+# <tr>
+# <td><img height={local_config["image_height"]} src="{image_path}"></td>
+# <td valign="middle">
+#     <center><b>{count} {'cards' if count > 1 else 'card'} done so far!</b><br>
+#     {encouragement}</center>
+# </td>
+# </tr>
+# </table>"""
+        html = "Hello World!"
 
         notification = Notification(
             html,
