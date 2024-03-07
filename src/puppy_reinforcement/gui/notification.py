@@ -94,8 +94,8 @@ class Notification(QLabel):
             )
         elif movie:
             movie = QMovie(movie)
-            movie.start()
             movie.started.connect(self.movieFirstUpdateEvent)
+            movie.start()
             size = movie.scaledSize()
             # aspect = size.width() / size.height()
             # size.setHeight(image_height)
