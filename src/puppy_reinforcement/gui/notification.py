@@ -53,6 +53,7 @@ from aqt.qt import (
     QWidget,
     QMovie,
     QHBoxLayout,
+    QPixmap,
 )
 
 from ..libaddon.platform import is_anki_version_in_range
@@ -89,9 +90,7 @@ class Notification(QLabel):
             # pic = QPicture()
             # pic.load(picture)
             # self.setPicture(pic)
-            self.layout().addWidget(
-                QLabel(f"""\<img height={image_height} src="{picture}">""")
-            )
+            self.layout().addWidget(QPixmap(picture).scaledToHeight(self._image_height))
         elif movie:
             movie = QMovie(movie)
             self._movie_label = QLabel()
