@@ -91,14 +91,14 @@ class PuppyReinforcer:
         count = self._state["cnt"]
 
         text = f"<b>{count} {'cards' if count > 1 else 'card'} done so far!</b><br>{encouragement}"
-        movie = image_path if image_path.endswith(".gif") else None
-        picture = image_path if movie is None else None
+        movie_path = image_path if image_path.endswith(".gif") else None
+        image_path = image_path if movie is None else None
 
         notification = Notification(
             text,
             self._mw.progress,
-            movie=movie,
-            picture=picture,
+            movie=movie_path,
+            picture=image_path,
             duration=local_config["duration"],
             parent=self._mw.app.activeWindow() or self._mw,
             align_horizontal=local_config["tooltip_align_horizontal"],
