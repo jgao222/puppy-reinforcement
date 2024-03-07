@@ -50,10 +50,9 @@ from aqt.qt import (
     Qt,
     QTimer,
     QWidget,
-    QPicture,
     QMovie,
     QHBoxLayout,
-    KeepAspectRatio,
+    AspectRatioMode,
 )
 
 from ..libaddon.platform import is_anki_version_in_range
@@ -95,7 +94,7 @@ class Notification(QLabel):
         elif movie:
             movie = QMovie(movie)
             size = movie.scaledSize()
-            size.scale(1000000, image_height, KeepAspectRatio)
+            size.scale(1000000, image_height, AspectRatioMode.KeepAspectRatio)
             movie.setScaledSize(size)
             movie_label = QLabel()
             movie_label.setMovie(movie)
