@@ -134,7 +134,7 @@ class Notification(QLabel):
         aspect = rect.width() / rect.height()
         self._movie_label.movie().setScaledSize(QSize(self._image_height * aspect, self._image_height))
         # resize only once
-        self._movie_label.move().updated.disconnect(self.movieFirstUpdateEvent)
+        self._movie_label.movie().updated.disconnect(self.movieFirstUpdateEvent)
 
     def show(self) -> None:
         # TODO: drop dependency on mw
