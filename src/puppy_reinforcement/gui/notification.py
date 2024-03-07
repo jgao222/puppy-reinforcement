@@ -90,7 +90,9 @@ class Notification(QLabel):
             # pic = QPicture()
             # pic.load(picture)
             # self.setPicture(pic)
-            self.layout().addWidget(QPixmap(picture).scaledToHeight(self._image_height))
+            self._picture_label = QLabel()
+            self._picture_label.setPicture(QPixmap(picture).scaledToHeight(self._image_height))
+            self.layout().addWidget(self._picture_label)
         elif movie:
             movie = QMovie(movie)
             self._movie_label = QLabel()
