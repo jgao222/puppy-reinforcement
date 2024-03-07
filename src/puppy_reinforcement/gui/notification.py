@@ -82,6 +82,7 @@ class Notification(QLabel):
         **kwargs,
     ):
         super().__init__("", parent=parent, **kwargs)
+        self.setMaximumHeight(image_height)
         if picture or movie:
             if picture:
                 pic = QPicture()
