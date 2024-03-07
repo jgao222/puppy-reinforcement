@@ -114,6 +114,7 @@ class Notification(QLabel):
             # movie_label.setMaximumWidth(image_height * aspect)
             self.layout().addWidget(self._movie_label)
 
+        self.layout().addSpacing(5)
         message = QLabel(text)
         self.layout().addWidget(message)
         self._progress_manager = progress_manager
