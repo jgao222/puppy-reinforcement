@@ -133,7 +133,7 @@ class Notification(QLabel):
         print("resize!", rect)
         aspect = rect.width() / rect.height()
         self._movie_label.movie().setScaledSize(QSize(self._image_height * aspect, self._image_height))
-        self._movie_label.update()
+        self._movie_label.setMaximumHeight(self._image_height + 20)
         # resize only once
         self._movie_label.movie().updated.disconnect(self.movieFirstUpdateEvent)
 
