@@ -94,8 +94,8 @@ class Notification(QLabel):
             movie = QMovie(movie)
             size = movie.scaledSize()
             aspect = size.width() / size.height()
-            size.setHeight(int(image_height))
-            # size.setWidth(int(image_height) * aspect)
+            # size.setHeight(int(image_height))
+            size.setWidth(int(image_height) * aspect)
             # manual scaling since methods w/ aspect ratio specified didn't work
             # size.scale(image_height, image_height, Qt.AspectRatioMode.KeepAspectRatioByExpanding)
             movie.setScaledSize(size)
