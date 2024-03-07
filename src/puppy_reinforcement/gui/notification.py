@@ -136,8 +136,8 @@ class Notification(QLabel):
         self._movie_label.movie().setScaledSize(QSize(self._image_height * aspect, self._image_height))
         self._movie_label.setMaximumHeight(self._image_height + 20)
         self.setMaximumHeight(self._image_height + 20)
-        # self._movie_label.adjustSize()
-        # self.adjustSize()
+        self._movie_label.adjustSize()
+        self.adjustSize()
         # resize only once
         self._movie_label.movie().updated.disconnect(self.movieFirstUpdateEvent)
 
