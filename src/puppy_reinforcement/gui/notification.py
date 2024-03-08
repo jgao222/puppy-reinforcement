@@ -88,7 +88,12 @@ class Notification(QLabel):
         if picture:
             self._picture_label = QLabel()
             self._picture_label.setPixmap(
-                QPixmap(picture).scaledToHeight(self._image_height)
+                QPixmap(picture).scaledToHeight(
+                    self._image_height,
+                    # bilinear filtering instead of default FastTransformation
+                    # which has no filtering causing aliasing (pixelly images)
+                    Qt.TransformationMode.SmoothTransformation
+                )
             )
             self.layout().addWidget(self._picture_label)
         elif movie:
