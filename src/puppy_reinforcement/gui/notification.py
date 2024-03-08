@@ -103,19 +103,7 @@ class Notification(QLabel):
             movie.updated.connect(self.movieFirstUpdateEvent)
             movie.start()
             movie.stop()
-            size = movie.scaledSize()
             movie.start()
-            # aspect = size.width() / size.height()
-            # size.setHeight(image_height)
-            # size.setWidth(image_height * aspect)
-            # manual scaling since methods w/ aspect ratio specified didn't work
-            # size.scale(image_height, image_height, Qt.AspectRatioMode.KeepAspectRatio)
-            print(size)
-            # size.scale(1024, 1024, Qt.AspectRatioMode.IgnoreAspectRatio)
-            # print(size)
-            # movie.setScaledSize(size)
-            # movie_label.setMaximumHeight(image_height)
-            # movie_label.setMaximumWidth(image_height * aspect)
             self.layout().addWidget(self._movie_label)
 
         self.layout().addSpacing(5) # mimic the table's cell padding
@@ -151,11 +139,9 @@ class Notification(QLabel):
                    Qt.AspectRatioMode.KeepAspectRatioByExpanding)
         print(size)
         self._movie_label.movie().setScaledSize(size)
-        # padding
-        self._movie_label.setMaximumHeight(self._image_height + 20)
-        self.setMaximumHeight(self._image_height + 20)
-        self._movie_label.adjustSize()
-        self.adjustSize()
+
+        # self._movie_label.adjustSize()
+        # self.adjustSize()
         # resize only once
         self._movie_label.movie().updated.disconnect(self.movieFirstUpdateEvent)
 
