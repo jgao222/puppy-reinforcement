@@ -68,9 +68,8 @@ class Notification(QLabel):
     def __init__(
         self,
         text: str,
-        picture: str,
-        movie: str,
-        image_height: str,
+        media_path: str,
+        media_height: str,
         progress_manager: ProgressManager,
         parent: QWidget,
         duration: int = 3000,
@@ -83,28 +82,30 @@ class Notification(QLabel):
         **kwargs,
     ):
         super().__init__("", parent=parent, **kwargs)
-        self._image_height = int(image_height)
+        self._media_height = int(media_height)
         self.setLayout(QHBoxLayout())
-        if picture:
+
+        # only supported movie type is gif, QMovie could allow supporting others
+        if any([media_path.endswith(file_ext) for file_ext in [".gif"]]):
+            movie = QMovie(media_path)
+            self._movie_label = QLabel()
+            self._movie_label.setMovie(movie)
+            movie.updated.connect(self.movieFirstUpdateEvent)
+            movie.start()
+            movie.stop() # force QMovie to fire update signal after initializing
+            movie.start()
+            self.layout().addWidget(self._movie_label)
+        else: # it is a picture (must be, since match extensions to pick files)
             self._picture_label = QLabel()
             self._picture_label.setPixmap(
-                QPixmap(picture).scaledToHeight(
-                    self._image_height,
+                QPixmap(media_path).scaledToHeight(
+                    self._media_height,
                     # bilinear filtering instead of default FastTransformation
                     # which has no filtering causing aliasing (pixelly images)
                     Qt.TransformationMode.SmoothTransformation
                 )
             )
             self.layout().addWidget(self._picture_label)
-        elif movie:
-            movie = QMovie(movie)
-            self._movie_label = QLabel()
-            self._movie_label.setMovie(movie)
-            movie.updated.connect(self.movieFirstUpdateEvent)
-            movie.start()
-            movie.stop()
-            movie.start()
-            self.layout().addWidget(self._movie_label)
 
         self.layout().addSpacing(5) # mimic the table's cell padding
         message = QLabel(text)
@@ -135,7 +136,7 @@ class Notification(QLabel):
         # of "image_height" x "image_height"
         # if it ever becomes possible for user to specify width, switch to
         # KeepAspectRatio
-        size.scale(self._image_height, self._image_height,
+        size.scale(self._media_height, self._media_height,
                    Qt.AspectRatioMode.KeepAspectRatioByExpanding)
         self._movie_label.movie().setScaledSize(size)
 

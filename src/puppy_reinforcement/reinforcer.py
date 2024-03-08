@@ -86,18 +86,15 @@ class PuppyReinforcer:
         )
         self._state["last"] = self._state["cnt"]
 
-    def _show_tooltip(self, encouragement: str, image_path: str):
+    def _show_tooltip(self, encouragement: str, media_path: str):
         local_config = self._config["local"]
         count = self._state["cnt"]
 
         text = f"<b>{count} {'cards' if count > 1 else 'card'} done so far!</b><br>{encouragement}"
-        movie_path = image_path if image_path.endswith(".gif") else ""
-        image_path = image_path if movie_path == "" else ""
 
         notification = Notification(
             text,
-            image_path,
-            movie_path,
+            media_path,
             local_config["image_height"],
             self._mw.progress,
             duration=local_config["duration"],
