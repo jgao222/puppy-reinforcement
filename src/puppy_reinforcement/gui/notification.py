@@ -137,15 +137,21 @@ class Notification(QLabel):
         message.setPalette(palette)
 
     def movieFirstUpdateEvent(self, rect: QRect):
-        # rect = self._movie_label.movie().scaledSize()
+        # slot for first update of movie, which happens when it is started and
+        # stopped. must react to its first update because Qt doesn't know the
+        # movie's dimensions before that, so we can't get proper scaling info
+        # unless we were to parse it out of the file manually (more complicated)
         print("resize!", rect)
         size = rect.size()
+        # no limit on width, this will let wider images spill out of the square
+        # of "image_height" x "image_height"
+        # if it ever becomes possible for user to specify width, switch to
+        # KeepAspectRatio
         size.scale(self._image_height, self._image_height,
                    Qt.AspectRatioMode.KeepAspectRatioByExpanding)
         print(size)
-        # aspect = rect.width() / rect.height()
-        # self._movie_label.movie().setScaledSize(QSize(self._image_height * aspect, self._image_height))
         self._movie_label.movie().setScaledSize(size)
+        # padding
         self._movie_label.setMaximumHeight(self._image_height + 20)
         self.setMaximumHeight(self._image_height + 20)
         self._movie_label.adjustSize()
