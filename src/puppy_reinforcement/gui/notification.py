@@ -83,15 +83,13 @@ class Notification(QLabel):
         **kwargs,
     ):
         super().__init__("", parent=parent, **kwargs)
-        # self.setMaximumHeight(image_height)
         self._image_height = int(image_height)
         self.setLayout(QHBoxLayout())
         if picture:
-            # pic = QPicture()
-            # pic.load(picture)
-            # self.setPicture(pic)
             self._picture_label = QLabel()
-            self._picture_label.setPixmap(QPixmap(picture).scaledToHeight(self._image_height))
+            self._picture_label.setPixmap(
+                QPixmap(picture).scaledToHeight(self._image_height)
+            )
             self.layout().addWidget(self._picture_label)
         elif movie:
             movie = QMovie(movie)
@@ -115,7 +113,7 @@ class Notification(QLabel):
             # movie_label.setMaximumWidth(image_height * aspect)
             self.layout().addWidget(self._movie_label)
 
-        self.layout().addSpacing(5)
+        self.layout().addSpacing(5) # mimic the table's cell padding
         message = QLabel(text)
         self.layout().addWidget(message)
         self._progress_manager = progress_manager
@@ -136,8 +134,13 @@ class Notification(QLabel):
     def movieFirstUpdateEvent(self, rect: QRect):
         # rect = self._movie_label.movie().scaledSize()
         print("resize!", rect)
-        aspect = rect.width() / rect.height()
-        self._movie_label.movie().setScaledSize(QSize(self._image_height * aspect, self._image_height))
+        size = rect.size()
+        size.scale(self._image_height, self._image_height,
+                   Qt.AspectRatioMode.KeepAspectRatioByExpanding)
+        print(size)
+        # aspect = rect.width() / rect.height()
+        # self._movie_label.movie().setScaledSize(QSize(self._image_height * aspect, self._image_height))
+        self._movie_label.movie().setScaledSize(size)
         self._movie_label.setMaximumHeight(self._image_height + 20)
         self.setMaximumHeight(self._image_height + 20)
         self._movie_label.adjustSize()
