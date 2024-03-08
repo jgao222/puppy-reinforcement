@@ -109,6 +109,7 @@ class Notification(QLabel):
         self.layout().addSpacing(5) # mimic the table's cell padding
         message = QLabel(text)
         self.layout().addWidget(message)
+
         self._progress_manager = progress_manager
         self._duration = duration
         self._align_horizontal = align_horizontal
@@ -129,7 +130,6 @@ class Notification(QLabel):
         # stopped. must react to its first update because Qt doesn't know the
         # movie's dimensions before that, so we can't get proper scaling info
         # unless we were to parse it out of the file manually (more complicated)
-        print("resize!", rect)
         size = rect.size()
         # no limit on width, this will let wider images spill out of the square
         # of "image_height" x "image_height"
@@ -137,11 +137,8 @@ class Notification(QLabel):
         # KeepAspectRatio
         size.scale(self._image_height, self._image_height,
                    Qt.AspectRatioMode.KeepAspectRatioByExpanding)
-        print(size)
         self._movie_label.movie().setScaledSize(size)
 
-        # self._movie_label.adjustSize()
-        # self.adjustSize()
         # resize only once
         self._movie_label.movie().updated.disconnect(self.movieFirstUpdateEvent)
 
