@@ -83,6 +83,7 @@ class Notification(QLabel):
     ):
         super().__init__("", parent=parent, **kwargs)
         self._media_height = int(media_height)
+        # instead of using table, use HBoxLayout with two labels side by side
         self.setLayout(QHBoxLayout())
 
         # only supported movie type is gif, QMovie could allow supporting others
