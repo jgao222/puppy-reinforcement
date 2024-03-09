@@ -37,7 +37,7 @@ Customizable notification pop-up
 
 
 from typing import Optional, cast
-from aqt import QRect, QSize
+from aqt import QRect
 
 from aqt.progress import ProgressManager
 from aqt.qt import (
@@ -136,12 +136,12 @@ class Notification(QLabel):
         # no limit on width, this will let wider images spill out of the square
         # of "image_height" x "image_height"
         # if it ever becomes possible for user to specify width, switch to
-        # KeepAspectRatio
+        # using KeepAspectRatio instead of KeepAspectRatioByExpanding
         size.scale(self._media_height, self._media_height,
                    Qt.AspectRatioMode.KeepAspectRatioByExpanding)
         self._movie_label.movie().setScaledSize(size)
 
-        # resize only once
+        # resize only once, so disconnect so this isn't called again
         self._movie_label.movie().updated.disconnect(self.movieFirstUpdateEvent)
 
     def show(self) -> None:
